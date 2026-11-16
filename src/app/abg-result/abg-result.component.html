@@ -1,0 +1,30 @@
+<div class="result" *ngIf="result !== null">
+  <h2>Interpretation</h2>
+
+  <p class="patient">
+    Patient: {{ patient.age }} y, {{ patient.gender || 'gender not set' }}
+    <span *ngIf="bmi !== null">, BMI {{ bmi }}</span>
+  </p>
+
+  <ul>
+    <li [class.abnormal]="result.phStatus !== 'Normal'">
+      <strong>pH:</strong> {{ result.phStatus }}
+    </li>
+    <li [class.abnormal]="result.disorder !== 'Normal acid-base balance'">
+      <strong>Disorder:</strong> {{result.disorder}}
+    </li>
+    <li>
+      <strong>Compensation:</strong> {{result.compensation}}
+    </li>
+    <li [class.abnormal]="result.oxygenation !== 'Normal oxygenation'">
+      <strong>Oxygenation:</strong> {{result.oxygenation}}
+    </li>
+  </ul>
+
+  <h3>Treatment</h3>
+  <ul>
+    <li *ngFor="let line of result.treatment">{{ line }}</li>
+  </ul>
+
+  <button (click)="goBack()">Back</button>
+</div>

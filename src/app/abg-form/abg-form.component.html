@@ -1,0 +1,47 @@
+<form [formGroup]="patientForm">
+  <section class="card">
+    <h2>Patient information</h2>
+
+    <label>Age (years)
+      <input type="number" formControlName="age">
+    </label>
+    <p class="error" *ngIf="patientForm.controls.age.invalid && patientForm.controls.age.touched">Age must be between 0 and 120.</p>
+
+    <label>Gender
+      <select formControlName="gender">
+        <option value="">-- choose --</option>
+        <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
+      </select>
+    </label>
+    <p class="error" *ngIf="patientForm.controls.gender.invalid && patientForm.controls.gender.touched">Please choose a gender.</p>
+
+    <label>Height (cm)
+      <input type="number" formControlName="heightCm">
+    </label>
+    <p class="error" *ngIf="patientForm.controls.heightCm.invalid && patientForm.controls.heightCm.touched">Height must be between 50 and 250 cm.</p>
+
+    <label>Weight (kg)
+      <input type="number" formControlName="weightKg">
+    </label>
+    <p class="error" *ngIf="patientForm.controls.weightKg.invalid && patientForm.controls.weightKg.touched">Weight must be between 1 and 300 kg.</p>
+  </section>
+</form>
+
+<section class="card">
+  <h2>Arterial blood gas</h2>
+  <app-abg-field [range]="ranges.ph"    [(value)]="abg.ph"></app-abg-field>
+  <app-abg-field [range]="ranges.paco2" [(value)]="abg.paco2"></app-abg-field>
+  <app-abg-field [range]="ranges.pao2"  [(value)]="abg.pao2"></app-abg-field>
+  <app-abg-field [range]="ranges.hco3"  [(value)]="abg.hco3"></app-abg-field>
+  <app-abg-field [range]="ranges.sao2"  [(value)]="abg.sao2"></app-abg-field>
+</section>
+
+<div class="buttons">
+  <button class="primary" (click)="interpret()" [disabled]="!canInterpret() || patientForm.invalid">Interpret ABG</button>
+  <button (click)="loadExample()">Load example</button>
+  <button (click)="clearAll()">Clear</button>
+</div>
+
+<p *ngIf="!canInterpret() || patientForm.invalid" class="hint">
+  Fill in all patient fields, plus pH, PaCO2, PaO2 and HCO3 (and fix anything in red) to interpret.
+</p>

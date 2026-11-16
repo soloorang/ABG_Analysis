@@ -1,0 +1,9 @@
+<label>
+  {{ range.label }}
+  <span class="range">normal {{ range.low }} - {{ range.high }}</span>
+  <input type="number" step="any"
+         [ngModel]="value"
+         (ngModelChange)="onTyped($event)"
+         [ngClass]="getFlag()">
+</label>
+<p class="error" *ngIf="getError() !== ''">{{ getError() }}</p>
